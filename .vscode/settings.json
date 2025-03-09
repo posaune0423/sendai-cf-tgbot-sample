@@ -1,4 +1,7 @@
 {
-  "biome.enabled": false,
-  "deno.enable": false
+    "files.associations": {
+        "wrangler.json": "jsonc"
+    },
+    "deno.enable": false,
+    "biome.enabled": false
 }
