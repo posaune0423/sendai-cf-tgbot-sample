@@ -27,10 +27,14 @@ async function initializeAgent(userId: string, env: Env) {
         const llm = new ChatOpenAI({
             modelName: "gpt-4o-mini",
             temperature: 0.7,
+            apiKey: env.OPENAI_API_KEY,
         });
 
         const solanaKit = new SolanaAgentKit(env.SOLANA_PRIVATE_KEY, env.RPC_URL, {
             OPENAI_API_KEY: env.OPENAI_API_KEY,
+            PERPLEXITY_API_KEY: env.PERPLEXITY_API_KEY,
+            ALLORA_API_KEY: env.ALLORA_API_KEY,
+            ALLORA_API_URL: env.ALLORA_API_URL,
         });
 
         const tools = createSolanaTools(solanaKit);
