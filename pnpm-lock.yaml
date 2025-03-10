@@ -20,12 +20,6 @@ importers:
       grammy:
         specifier: ^1.35.0
         version: 1.35.0
-      messages:
-        specifier: link:@langchain/core/messages
-        version: link:@langchain/core/messages
-      prebuilt:
-        specifier: link:@langchain/langgraph/prebuilt
-        version: link:@langchain/langgraph/prebuilt
       solana-agent-kit:
         specifier: ^1.4.8
         version: 1.4.8(@noble/hashes@1.7.1)(@solana/buffer-layout@4.0.1)(@types/node@22.13.10)(arweave@1.15.5)(borsh@2.0.0)(buffer@6.0.3)(bufferutil@4.0.9)(fastestsmallesttextencoderdecoder@1.0.22)(got@11.8.6)(react@19.0.0)(sodium-native@3.4.1)(typescript@5.8.2)(utf-8-validate@5.0.10)(ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@5.0.10))

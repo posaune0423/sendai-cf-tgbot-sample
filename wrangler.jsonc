@@ -5,7 +5,7 @@
 {
     "$schema": "node_modules/wrangler/config-schema.json",
     "name": "solana-tgbot-sample",
-    "main": "src/index.ts",
+    "main": "src/worker.ts",
     "compatibility_flags": ["nodejs_compat"],
     "compatibility_date": "2025-03-03",
     "observability": {

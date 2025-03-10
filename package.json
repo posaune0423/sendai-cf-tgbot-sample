@@ -20,8 +20,6 @@
         "@langchain/langgraph": "^0.2.54",
         "@langchain/openai": "^0.3.17",
         "grammy": "^1.35.0",
-        "messages": "link:@langchain/core/messages",
-        "prebuilt": "link:@langchain/langgraph/prebuilt",
         "solana-agent-kit": "^1.4.8"
     },
     "devDependencies": {
