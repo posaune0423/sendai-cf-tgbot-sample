@@ -31,6 +31,10 @@ async function initializeAgent(userId: string) {
     )
 
     const tools = createSolanaTools(solanaKit)
+
+    // NOTE: somehow create_image tool make this agent zonbie process
+    tools.filter((tool) => tool.name !== 'solana_create_image')
+
     const memory = new MemorySaver()
     const config = { configurable: { thread_id: userId } }
     const agent = createReactAgent({
