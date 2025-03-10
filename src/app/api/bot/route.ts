@@ -74,7 +74,9 @@ bot.on('message:text', async (ctx: any) => {
     ])) as AsyncIterable<{ agent?: any; tools?: any }>) {
       if ('agent' in chunk) {
         if (chunk.agent.messages[0].content) {
-          await ctx.reply(String(chunk.agent.messages[0].content))
+          await ctx.reply(String(chunk.agent.messages[0].content), {
+            parse_mode: 'Markdown',
+          })
         }
       }
     }
