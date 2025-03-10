@@ -38,24 +38,14 @@
 
 ## Directory Structure
 
+```bash
 src/
 ├── agents/ # Individual agent implementations
 ├── helper/ # Helper utilities and examples
+├── lib/ # Library code
 ├── prompts/ # Agent prompts and templates
 ├── tools/ # Custom tools for agents
 └── utils/ # Utility functions and configurations
-
-## Example Route Handler (Cloudflare Workers)
-
-```typescript
-export async function handleUserAction(
-  request: Request,
-  env: Env
-): Promise<Response> {
-  const data = await request.json()
-  const result = await processUserAction(data, env)
-  return Response.json(result)
-}
 ```
 
 ## Schema Validation (Zod example)
@@ -65,15 +55,4 @@ const userActionSchema = z.object({
   userId: z.string().uuid(),
   actionType: z.enum(['CREATE', 'UPDATE', 'DELETE']),
 })
-```
-
-## AI Agent Action Example (LangChain.js style)
-
-```typescript
-export async function executeAgentTask(input: AgentInput, tools: ToolRegistry) {
-  const reasoning = await generateReasoning(input)
-  const plan = await generatePlan(reasoning)
-  const toolResults = await invokeTools(plan)
-  return evaluateOutput(toolResults)
-}
 ```
