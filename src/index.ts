@@ -35,6 +35,11 @@ async function initializeAgent(userId: string, env: Env) {
             PERPLEXITY_API_KEY: env.PERPLEXITY_API_KEY,
             ALLORA_API_KEY: env.ALLORA_API_KEY,
             ALLORA_API_URL: env.ALLORA_API_URL,
+            HELIUS_API_KEY: env.HELIUS_API_KEY,
+            JUPITER_REFERRAL_ACCOUNT: env.JUPITER_REFERRAL_ACCOUNT,
+            FLASH_PRIVILEGE: env.FLASH_PRIVILEGE,
+            ETHEREUM_PRIVATE_KEY: env.ETHEREUM_PRIVATE_KEY,
+            ELFA_AI_API_KEY: env.ELFA_AI_API_KEY,
         });
 
         const tools = createSolanaTools(solanaKit);
