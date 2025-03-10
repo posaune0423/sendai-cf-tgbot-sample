@@ -1,23 +1,9 @@
-import { Bot, webhookCallback } from "grammy";
+import { Bot, webhookCallback, Context } from "grammy";
 import { ChatOpenAI } from "@langchain/openai";
 import { MemorySaver } from "@langchain/langgraph";
 import { HumanMessage } from "@langchain/core/messages";
 
-export interface Env {
-    TELEGRAM_BOT_TOKEN: string;
-    SOLANA_PRIVATE_KEY: string;
-    RPC_URL: string;
-    OPENAI_API_KEY: string;
-    ALLORA_API_KEY?: string;
-    ALLORA_API_URL?: string;
-    PERPLEXITY_API_KEY?: string;
-    JUPITER_REFERRAL_ACCOUNT?: string;
-    JUPITER_FEE_BPS?: string;
-    FLASH_PRIVILEGE?: string;
-    HELIUS_API_KEY?: string;
-    ETHEREUM_PRIVATE_KEY?: string;
-    ELFA_AI_API_KEY?: string;
-}
+const TIMEOUT_MS = 20 * 1000;
 
 async function initializeAgent(userId: string, env: Env) {
     try {
@@ -84,7 +70,7 @@ async function initializeAgent(userId: string, env: Env) {
  */
 
 export default {
-    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    async fetch(request: Request, env: Env): Promise<Response> {
         const token = env.TELEGRAM_BOT_TOKEN;
         if (!token) {
             throw new Error("TELEGRAM_BOT_TOKEN environment variable not found.");
@@ -92,19 +78,28 @@ export default {
 
         const bot = new Bot(token);
 
+        bot.command("start", async (ctx) => {
+            await ctx.reply("Hello! I'm a Daiko AI");
+        });
+
         // Telegram bot handler
-        bot.on("message:text", async (ctx: any) => {
+        bot.on("message:text", async (ctx: Context) => {
             const userId = ctx.from?.id.toString();
-            if (!userId) {
+            if (!userId || !ctx.message?.text) {
                 return;
             }
+
             const { agent, config } = await initializeAgent(userId, env);
+            console.log("initialized Agent");
+
             const stream = await agent.stream(
                 { messages: [new HumanMessage(ctx.message.text)] },
                 config
             );
+            console.log("stream", stream);
+
             const timeoutPromise = new Promise((_, reject) =>
-                setTimeout(() => reject(new Error("Timeout")), 20000)
+                setTimeout(() => reject(new Error("Timeout")), TIMEOUT_MS)
             );
             try {
                 for await (const chunk of (await Promise.race([
@@ -114,9 +109,14 @@ export default {
                     agent?: any;
                     tools?: any;
                 }>) {
+                    console.log("chunk", chunk);
+
                     if ("agent" in chunk) {
+                        console.log("chunk.agent", chunk.agent);
                         if (chunk.agent.messages[0].content) {
-                            await ctx.reply(String(chunk.agent.messages[0].content));
+                            await ctx.reply(String(chunk.agent.messages[0].content), {
+                                parse_mode: "Markdown",
+                            });
                         }
                     }
                 }
@@ -132,8 +132,14 @@ export default {
             }
         });
 
-        const handler = webhookCallback(bot, "cloudflare-mod");
+        const handler = webhookCallback(bot, "cloudflare-mod", {
+            timeoutMilliseconds: TIMEOUT_MS,
+            onTimeout: () => {
+                console.log("Timeout");
+                return new Response("Timeout", { status: 408 });
+            },
+        });
 
         return handler(request);
     },
-} satisfies ExportedHandler<Env>;
+};
