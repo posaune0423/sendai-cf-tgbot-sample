@@ -64,10 +64,9 @@ bot.on('message:text', async (ctx: any) => {
     return
   }
   const { agent, config } = await initializeAgent(userId)
-  const stream = await agent.stream(
-    { messages: [new HumanMessage(ctx.message.text)] },
-    config
-  )
+  const stream = await agent.stream({
+    messages: [new HumanMessage(ctx.message.text)],
+  })
   const timeoutPromise = new Promise((_, reject) =>
     setTimeout(() => reject(new Error('Timeout')), 200 * 1000)
   )
