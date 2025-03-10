@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
-export const maxDuration = 60 // can use 300 with vercel premium
+export const maxDuration = 300 // can use 300 with vercel premium
 
 import { Bot, webhookCallback } from 'grammy'
 import { SolanaAgentKit, createSolanaTools } from 'solana-agent-kit'
@@ -65,7 +65,7 @@ bot.on('message:text', async (ctx: any) => {
     config
   )
   const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error('Timeout')), 20000)
+    setTimeout(() => reject(new Error('Timeout')), 200 * 1000)
   )
   try {
     for await (const chunk of (await Promise.race([
