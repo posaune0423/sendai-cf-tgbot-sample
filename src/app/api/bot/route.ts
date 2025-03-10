@@ -36,7 +36,7 @@ async function initializeAgent(userId: string) {
 
     const tools = createSolanaTools(solanaKit)
 
-    // NOTE: somehow create_image tool make this agent zonbie process
+    // NOTE: somehow `solana_create_image` tool make this agent zonbie process
     tools.filter((tool) => tool.name !== 'solana_create_image')
 
     const memory = new MemorySaver()
@@ -74,7 +74,7 @@ bot.on('message:text', async (ctx: any) => {
   )
 
   const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error('Timeout')), 200 * 1000)
+    setTimeout(() => reject(new Error('Timeout')), 700 * 1000)
   )
   try {
     for await (const chunk of (await Promise.race([
