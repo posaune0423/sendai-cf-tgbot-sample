@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
-export const maxDuration = 300 // can use 300 with vercel premium
+export const maxDuration = 800 // can use 300 with vercel premium
 
 import { Bot, webhookCallback } from 'grammy'
 import { SolanaAgentKit, createSolanaTools } from 'solana-agent-kit'
