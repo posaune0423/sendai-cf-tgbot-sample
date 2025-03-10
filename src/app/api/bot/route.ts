@@ -27,6 +27,10 @@ async function initializeAgent(userId: string) {
       process.env.RPC_URL!,
       {
         OPENAI_API_KEY: process.env.OPENAI_API_KEY!,
+        PERPLEXITY_API_KEY: process.env.PERPLEXITY_API_KEY!,
+        ALLORA_API_KEY: process.env.ALLORA_API_KEY!,
+        ALLORA_API_URL: process.env.ALLORA_API_URL!,
+        HELIUS_API_KEY: process.env.HELIUS_API_KEY!,
       }
     )
 
@@ -64,9 +68,11 @@ bot.on('message:text', async (ctx: any) => {
     return
   }
   const { agent, config } = await initializeAgent(userId)
-  const stream = await agent.stream({
-    messages: [new HumanMessage(ctx.message.text)],
-  })
+  const stream = await agent.stream(
+    { messages: [new HumanMessage(ctx.message.text)] },
+    config
+  )
+
   const timeoutPromise = new Promise((_, reject) =>
     setTimeout(() => reject(new Error('Timeout')), 200 * 1000)
   )
