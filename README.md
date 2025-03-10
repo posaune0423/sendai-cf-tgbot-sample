@@ -1,24 +1,128 @@
-# Telegram Bot Starter with Solana Agent Kit
+# sendai-cf-tgbot-sample
 
-This example showcases how we can make a telegram bot with the Solana Agent Kit by Send AI.
+This project demonstrates how to build a Telegram bot using [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit) and Cloudflare Workers.
 
-## Quick Deploy
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsendaifun%2Fsolana-agent-kit%2Ftree%2Fmain%2Fexamples%2Ftg-bot-starter&env=OPENAI_API_KEY,RPC_URL,SOLANA_PRIVATE_KEY,TELEGRAM_BOT_TOKEN&project-name=solana-agent-kit&repository-name=sak-yourprojectname)
+## Features
 
-## How to get the telegram bot token
+- Serverless deployment using Cloudflare Workers
+- Blockchain integration with Solana Agent Kit
+- Interactive user experience through Telegram bot interface
 
-You can check [here](https://help.zoho.com/portal/en/kb/desk/support-channels/instant-messaging/telegram/articles/telegram-integration-with-zoho-desk#How_to_find_a_token_for_an_existing_Telegram_Bot) how you can obtain a bot token for your telegram bot.
+## Requirements
 
-## How to setup the project
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [pnpm](https://pnpm.io/) package manager
+- [Cloudflare](https://www.cloudflare.com/) account
+- [Telegram](https://telegram.org/) account and bot token
+- [OpenAI API key](https://platform.openai.com/api-keys)
 
-- Set env variables
-- Run ``` pnpm install ```
-- Run ``` pnpm run dev ``` 
-- Run ``` ngrok http 3000 ```
-- With the URL you got from ngrok, where your bot is hosted at https://yourUrl.app/api/bot 
-- Set the webhook by using this command ``` curl https://api.telegram.org/bot<telegram_bot_token>/setWebhook?url=https://<your-deployment-url>.app/api/bot ``` or simply clicking on that link.
-- You can host it on Vercel too as we have used NextJs in this.
-- Once the URL is set successfully, you will see this ``` {"ok":true,"result":true,"description":"Webhook was set"} ```
+## Quick Start
 
-Done!!! Congratulations you just hosted Solana Agent Kit on a Telegram bot.
+### Getting a Telegram Bot Token
 
+1. Connect to [@BotFather](https://t.me/BotFather) on Telegram
+2. Send the `/newbot` command to create a new bot
+3. Follow the instructions to set a name and username
+4. Save the generated token (e.g., `123456789:ABCDefGhIJKlmNoPQRsTUVwxyZ`)
+
+For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-channels/instant-messaging/telegram/articles/telegram-integration-with-zoho-desk#How_to_find_a_token_for_an_existing_Telegram_Bot).
+
+### Project Setup
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/yourusername/sendai-cf-tgbot-sample.git
+   ```
+
+   ```bash
+   cd sendai-cf-tgbot-sample
+   ```
+
+2. Install dependencies
+
+   ```bash
+   pnpm install
+   ```
+
+3. Set up environment variables
+
+   - Copy `.dev.vars.example` to `.dev.vars`
+   - Configure required variables (`TELEGRAM_BOT_TOKEN`, `OPENAI_API_KEY`, `SOLANA_PRIVATE_KEY`, etc.)
+
+4. Start the local development server
+
+   ```bash
+   pnpm run dev
+   ```
+
+5. In a separate terminal, expose your local server using ngrok
+
+   ```bash
+   npx ngrok http 8787
+   ```
+
+6. Set up the webhook using the URL provided by ngrok
+
+   ```bash
+   curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<NGROK_URL>/
+   ```
+
+7. If successful, you'll see this response
+   ```json
+   { "ok": true, "result": true, "description": "Webhook was set" }
+   ```
+
+## Deploying to Cloudflare
+
+1. Log in to Cloudflare and access Workers & Pages
+
+2. Set environment variables as Cloudflare secrets
+
+   ```bash
+   npx wrangler secret put TELEGRAM_BOT_TOKEN
+   npx wrangler secret put OPENAI_API_KEY
+   # Set other required environment variables similarly
+   ```
+
+3. Deploy your project
+
+   ```bash
+   pnpm run deploy
+   ```
+
+4. Set up the webhook using your deployed URL
+   ```bash
+   curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<YOUR_WORKER_URL>/
+   ```
+
+## Development
+
+- `src/index.ts`: Main application code
+- `wrangler.jsonc`: Cloudflare Workers configuration
+
+### Code Quality with Biome
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting. Biome is a fast formatter and linter for JavaScript and TypeScript.
+
+Available scripts:
+
+- `pnpm lint`: Run Biome linter on source files
+- `pnpm format`: Format source files with Biome
+- `pnpm check`: Check and automatically fix issues in source files
+
+VS Code users can install the [Biome extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) for in-editor linting and formatting.
+
+## Troubleshooting
+
+- **Webhook setup fails**: Verify that your URL is correct and your Telegram bot token is valid
+- **Bot doesn't respond**: Check logs and ensure environment variables are properly configured
+- When you run image generation tasks using an agent developed by Solana Agent Kit, sometimes it becomes a zombie process just keeping timeout and sending image generation tasks to API endlessly, so please be careful.
+
+## License
+
+MIT License
+
+---
+
+🎉 Congratulations! You now have a Telegram bot running with Solana Agent Kit on Cloudflare Workers.
