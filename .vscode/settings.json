@@ -1,7 +1,7 @@
 {
     "files.associations": {
-        "wrangler.json": "jsonc"
+        ".denoflare": "jsonc",
+        ".cursorrules": "markdown"
     },
-    "deno.enable": false,
     "biome.enabled": false
 }

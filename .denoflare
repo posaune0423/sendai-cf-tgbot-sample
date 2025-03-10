@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/skymethod/denoflare/v0.6.0/common/config.schema.json",
+  "scripts": {
+    "solana-tgbot-sample": {
+      "path": "src/index.ts",
+      "bindings": {},
+      "localPort": 3030
+    }
+  },
+  "profiles": {
+    "account1": {
+      // your cloudflare account id
+      "accountId": "7046457855b37423c07b1b0c6014fe33",
+      // your cloudflare api token
+      "apiToken": "dQ33r976Xw8CmjA8RqGQ5JFdlnwdCBul60h8XWij"
+    }
+  }
+}

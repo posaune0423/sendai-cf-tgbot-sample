@@ -1,0 +1,38 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-net --allow-env --allow-read --watch src/index.ts",
+    "start": "deno run --allow-net --allow-env --allow-read src/index.ts",
+    "test": "deno test --allow-net --allow-env --allow-read",
+    "deploy": "deployctl deploy --project=solana-tgbot-sample src/index.ts"
+  },
+  "imports": {
+    "@cloudflare/workers-types": "npm:@cloudflare/workers-types@^4.20250303.0",
+    "@langchain/core": "npm:@langchain/core@^0.3.42",
+    "@langchain/langgraph": "npm:@langchain/langgraph@^0.2.54",
+    "@langchain/openai": "npm:@langchain/openai@^0.3.17",
+    "grammy": "https://deno.land/x/grammy@v1.35.0/mod.ts",
+    "solana-agent-kit": "npm:solana-agent-kit@^1.4.8"
+  },
+  "nodeModulesDir": "auto",
+  "compilerOptions": {
+    "allowJs": true,
+    "types": ["@cloudflare/workers-types/2025-03-03", "src/types/index.d.ts"],
+    "lib": ["deno.window", "deno.ns", "dom"],
+    "strict": true
+  },
+  "lint": {
+    "include": ["src/"],
+    "exclude": ["node_modules/", "dist/"],
+    "rules": {
+      "tags": ["recommended"]
+    }
+  },
+  "fmt": {
+    "include": ["src/"],
+    "exclude": ["node_modules/", "dist/"],
+    "indentWidth": 4,
+    "lineWidth": 100,
+    "singleQuote": false,
+    "useTabs": false
+  }
+}
