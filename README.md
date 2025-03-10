@@ -1,20 +1,20 @@
-# Telegram Bot with Solana Agent Kit on Cloudflare Workers
+# sendai-cf-tgbot-sample
 
-This project demonstrates how to build a Telegram bot using Solana Agent Kit and Cloudflare Workers.
+This project demonstrates how to build a Telegram bot using [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit) and Cloudflare Workers.
 
 ## Features
 
-- Serverless deployment using Cloudflare Workers
-- Blockchain integration with Solana Agent Kit
-- Interactive user experience through Telegram bot interface
+-   Serverless deployment using Cloudflare Workers
+-   Blockchain integration with Solana Agent Kit
+-   Interactive user experience through Telegram bot interface
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [pnpm](https://pnpm.io/) package manager
-- [Cloudflare](https://www.cloudflare.com/) account
-- [Telegram](https://telegram.org/) account and bot token
-- OpenAI API key
+-   [Node.js](https://nodejs.org/) (v18 or higher)
+-   [pnpm](https://pnpm.io/) package manager
+-   [Cloudflare](https://www.cloudflare.com/) account
+-   [Telegram](https://telegram.org/) account and bot token
+-   [OpenAI API key](https://platform.openai.com/api-keys)
 
 ## Quick Start
 
@@ -30,70 +30,82 @@ For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-c
 ### Project Setup
 
 1. Clone the repository
-   ```bash
-   git clone https://github.com/yourusername/sendai-cf-tgbot-sample.git
-   cd sendai-cf-tgbot-sample
-   ```
+
+    ```bash
+    git clone https://github.com/yourusername/sendai-cf-tgbot-sample.git
+    ```
+
+    ```bash
+    cd sendai-cf-tgbot-sample
+    ```
 
 2. Install dependencies
-   ```bash
-   pnpm install
-   ```
+
+    ```bash
+    pnpm install
+    ```
 
 3. Set up environment variables
-   - Copy `.dev.vars.example` to `.dev.vars`
-   - Configure required variables (TELEGRAM_BOT_TOKEN, OPENAI_API_KEY, SOLANA_PRIVATE_KEY, etc.)
+
+    - Copy `.dev.vars.example` to `.dev.vars`
+    - Configure required variables (`TELEGRAM_BOT_TOKEN`, `OPENAI_API_KEY`, `SOLANA_PRIVATE_KEY`, etc.)
 
 4. Start the local development server
-   ```bash
-   pnpm run dev
-   ```
+
+    ```bash
+    pnpm run dev
+    ```
 
 5. In a separate terminal, expose your local server using ngrok
-   ```bash
-   npx ngrok http 8787
-   ```
+
+    ```bash
+    npx ngrok http 8787
+    ```
 
 6. Set up the webhook using the URL provided by ngrok
-   ```bash
-   curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<NGROK_URL>/
-   ```
+
+    ```bash
+    curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<NGROK_URL>/
+    ```
 
 7. If successful, you'll see this response
-   ```json
-   {"ok":true,"result":true,"description":"Webhook was set"}
-   ```
+    ```json
+    { "ok": true, "result": true, "description": "Webhook was set" }
+    ```
 
 ## Deploying to Cloudflare
 
 1. Log in to Cloudflare and access Workers & Pages
 
 2. Set environment variables as Cloudflare secrets
-   ```bash
-   npx wrangler secret put TELEGRAM_BOT_TOKEN
-   npx wrangler secret put OPENAI_API_KEY
-   # Set other required environment variables similarly
-   ```
+
+    ```bash
+    npx wrangler secret put TELEGRAM_BOT_TOKEN
+    npx wrangler secret put OPENAI_API_KEY
+    # Set other required environment variables similarly
+    ```
 
 3. Deploy your project
-   ```bash
-   pnpm run deploy
-   ```
+
+    ```bash
+    pnpm run deploy
+    ```
 
 4. Set up the webhook using your deployed URL
-   ```bash
-   curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<YOUR_WORKER_URL>/
-   ```
+    ```bash
+    curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<YOUR_WORKER_URL>/
+    ```
 
 ## Development
 
-- `src/index.ts`: Main application code
-- `wrangler.jsonc`: Cloudflare Workers configuration
+-   `src/index.ts`: Main application code
+-   `wrangler.jsonc`: Cloudflare Workers configuration
 
 ## Troubleshooting
 
-- **Webhook setup fails**: Verify that your URL is correct and your Telegram bot token is valid
-- **Bot doesn't respond**: Check logs and ensure environment variables are properly configured
+-   **Webhook setup fails**: Verify that your URL is correct and your Telegram bot token is valid
+-   **Bot doesn't respond**: Check logs and ensure environment variables are properly configured
+-   when you run image genration task using agent developed by solana agent kit, sometimes it beomes zombie process just keeping timeout and send image generation task to api endlessly, so please be careful.
 
 ## License
 

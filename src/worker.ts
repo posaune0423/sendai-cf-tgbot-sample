@@ -2,6 +2,7 @@ import { Bot, webhookCallback, Context } from "grammy";
 import { HumanMessage } from "@langchain/core/messages";
 import { initializeAgent } from "./agent";
 
+// increase timeout to 20 seconds so that image generation task can be completed
 const TIMEOUT_MS = 20 * 1000;
 
 /**
