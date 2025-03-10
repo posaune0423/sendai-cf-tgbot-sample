@@ -1,4 +1,4 @@
-import { Bot, webhookCallback, Context } from "grammy";
+import { Bot, webhookCallback, type Context } from "grammy";
 import { HumanMessage } from "@langchain/core/messages";
 import { initializeAgent } from "./agent";
 
@@ -39,19 +39,21 @@ export default {
 
             const stream = await agent.stream(
                 { messages: [new HumanMessage(ctx.message.text)] },
-                config
+                config,
             );
             console.log("stream", stream);
 
             const timeoutPromise = new Promise((_, reject) =>
-                setTimeout(() => reject(new Error("Timeout")), TIMEOUT_MS)
+                setTimeout(() => reject(new Error("Timeout")), TIMEOUT_MS),
             );
             try {
                 for await (const chunk of (await Promise.race([
                     stream,
                     timeoutPromise,
                 ])) as AsyncIterable<{
+                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                     agent?: any;
+                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
                     tools?: any;
                 }>) {
                     console.log("chunk", chunk);
@@ -65,10 +67,10 @@ export default {
                         }
                     }
                 }
-            } catch (error: any) {
-                if (error.message === "Timeout") {
+            } catch (error: unknown) {
+                if (error instanceof Error && error.message === "Timeout") {
                     await ctx.reply(
-                        "I'm sorry, the operation took too long and timed out. Please try again."
+                        "I'm sorry, the operation took too long and timed out. Please try again.",
                     );
                 } else {
                     console.error("Error processing stream:", error);

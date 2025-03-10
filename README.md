@@ -4,17 +4,17 @@ This project demonstrates how to build a Telegram bot using [Solana Agent Kit](h
 
 ## Features
 
--   Serverless deployment using Cloudflare Workers
--   Blockchain integration with Solana Agent Kit
--   Interactive user experience through Telegram bot interface
+- Serverless deployment using Cloudflare Workers
+- Blockchain integration with Solana Agent Kit
+- Interactive user experience through Telegram bot interface
 
 ## Requirements
 
--   [Node.js](https://nodejs.org/) (v18 or higher)
--   [pnpm](https://pnpm.io/) package manager
--   [Cloudflare](https://www.cloudflare.com/) account
--   [Telegram](https://telegram.org/) account and bot token
--   [OpenAI API key](https://platform.openai.com/api-keys)
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [pnpm](https://pnpm.io/) package manager
+- [Cloudflare](https://www.cloudflare.com/) account
+- [Telegram](https://telegram.org/) account and bot token
+- [OpenAI API key](https://platform.openai.com/api-keys)
 
 ## Quick Start
 
@@ -31,47 +31,47 @@ For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-c
 
 1. Clone the repository
 
-    ```bash
-    git clone https://github.com/yourusername/sendai-cf-tgbot-sample.git
-    ```
+   ```bash
+   git clone https://github.com/yourusername/sendai-cf-tgbot-sample.git
+   ```
 
-    ```bash
-    cd sendai-cf-tgbot-sample
-    ```
+   ```bash
+   cd sendai-cf-tgbot-sample
+   ```
 
 2. Install dependencies
 
-    ```bash
-    pnpm install
-    ```
+   ```bash
+   pnpm install
+   ```
 
 3. Set up environment variables
 
-    - Copy `.dev.vars.example` to `.dev.vars`
-    - Configure required variables (`TELEGRAM_BOT_TOKEN`, `OPENAI_API_KEY`, `SOLANA_PRIVATE_KEY`, etc.)
+   - Copy `.dev.vars.example` to `.dev.vars`
+   - Configure required variables (`TELEGRAM_BOT_TOKEN`, `OPENAI_API_KEY`, `SOLANA_PRIVATE_KEY`, etc.)
 
 4. Start the local development server
 
-    ```bash
-    pnpm run dev
-    ```
+   ```bash
+   pnpm run dev
+   ```
 
 5. In a separate terminal, expose your local server using ngrok
 
-    ```bash
-    npx ngrok http 8787
-    ```
+   ```bash
+   npx ngrok http 8787
+   ```
 
 6. Set up the webhook using the URL provided by ngrok
 
-    ```bash
-    curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<NGROK_URL>/
-    ```
+   ```bash
+   curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<NGROK_URL>/
+   ```
 
 7. If successful, you'll see this response
-    ```json
-    { "ok": true, "result": true, "description": "Webhook was set" }
-    ```
+   ```json
+   { "ok": true, "result": true, "description": "Webhook was set" }
+   ```
 
 ## Deploying to Cloudflare
 
@@ -79,33 +79,45 @@ For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-c
 
 2. Set environment variables as Cloudflare secrets
 
-    ```bash
-    npx wrangler secret put TELEGRAM_BOT_TOKEN
-    npx wrangler secret put OPENAI_API_KEY
-    # Set other required environment variables similarly
-    ```
+   ```bash
+   npx wrangler secret put TELEGRAM_BOT_TOKEN
+   npx wrangler secret put OPENAI_API_KEY
+   # Set other required environment variables similarly
+   ```
 
 3. Deploy your project
 
-    ```bash
-    pnpm run deploy
-    ```
+   ```bash
+   pnpm run deploy
+   ```
 
 4. Set up the webhook using your deployed URL
-    ```bash
-    curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<YOUR_WORKER_URL>/
-    ```
+   ```bash
+   curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<YOUR_WORKER_URL>/
+   ```
 
 ## Development
 
--   `src/index.ts`: Main application code
--   `wrangler.jsonc`: Cloudflare Workers configuration
+- `src/index.ts`: Main application code
+- `wrangler.jsonc`: Cloudflare Workers configuration
+
+### Code Quality with Biome
+
+This project uses [Biome](https://biomejs.dev/) for linting and formatting. Biome is a fast formatter and linter for JavaScript and TypeScript.
+
+Available scripts:
+
+- `pnpm lint`: Run Biome linter on source files
+- `pnpm format`: Format source files with Biome
+- `pnpm check`: Check and automatically fix issues in source files
+
+VS Code users can install the [Biome extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) for in-editor linting and formatting.
 
 ## Troubleshooting
 
--   **Webhook setup fails**: Verify that your URL is correct and your Telegram bot token is valid
--   **Bot doesn't respond**: Check logs and ensure environment variables are properly configured
--   when you run image genration task using agent developed by solana agent kit, sometimes it beomes zombie process just keeping timeout and send image generation task to api endlessly, so please be careful.
+- **Webhook setup fails**: Verify that your URL is correct and your Telegram bot token is valid
+- **Bot doesn't respond**: Check logs and ensure environment variables are properly configured
+- When you run image generation tasks using an agent developed by Solana Agent Kit, sometimes it becomes a zombie process just keeping timeout and sending image generation tasks to API endlessly, so please be careful.
 
 ## License
 
