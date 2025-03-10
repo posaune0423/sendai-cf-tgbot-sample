@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
-export const maxDuration = 800 // can use 300 with vercel premium
+export const maxDuration = 300 // can use 300 with vercel premium
 
 import { Bot, webhookCallback } from 'grammy'
 import { SolanaAgentKit, createSolanaTools } from 'solana-agent-kit'
@@ -20,6 +20,7 @@ async function initializeAgent(userId: string) {
     const llm = new ChatOpenAI({
       modelName: 'gpt-4o-mini',
       temperature: 0.7,
+      timeout: 700 * 1000,
     })
 
     const solanaKit = new SolanaAgentKit(
