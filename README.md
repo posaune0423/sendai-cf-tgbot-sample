@@ -2,13 +2,13 @@
 
 This project demonstrates how to build a Telegram bot using [Solana Agent Kit](https://github.com/sendaifun/solana-agent-kit) and Cloudflare Workers.
 
-## Features
+## 📦 Features
 
 - Serverless deployment using Cloudflare Workers
 - Blockchain integration with Solana Agent Kit
 - Interactive user experience through Telegram bot interface
 
-## Requirements
+## 📌 Requirements
 
 - [Node.js](https://nodejs.org/) (v18 or higher)
 - [pnpm](https://pnpm.io/) package manager
@@ -16,9 +16,9 @@ This project demonstrates how to build a Telegram bot using [Solana Agent Kit](h
 - [Telegram](https://telegram.org/) account and bot token
 - [OpenAI API key](https://platform.openai.com/api-keys)
 
-## Quick Start
+## 🍞 Quick Start
 
-### Getting a Telegram Bot Token
+### 🔑 Getting a Telegram Bot Token
 
 1. Connect to [@BotFather](https://t.me/BotFather) on Telegram
 2. Send the `/newbot` command to create a new bot
@@ -27,7 +27,7 @@ This project demonstrates how to build a Telegram bot using [Solana Agent Kit](h
 
 For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-channels/instant-messaging/telegram/articles/telegram-integration-with-zoho-desk#How_to_find_a_token_for_an_existing_Telegram_Bot).
 
-### Project Setup
+### 🍞 Project Setup
 
 1. Clone the repository
 
@@ -73,7 +73,7 @@ For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-c
    { "ok": true, "result": true, "description": "Webhook was set" }
    ```
 
-## Deploying to Cloudflare
+## 🚀 Deploying to Cloudflare
 
 1. Log in to Cloudflare and access Workers & Pages
 
@@ -96,12 +96,12 @@ For more details, check [here](https://help.zoho.com/portal/en/kb/desk/support-c
    curl https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook?url=https://<YOUR_WORKER_URL>/
    ```
 
-## Development
+## 🔧 Development
 
 - `src/index.ts`: Main application code
 - `wrangler.jsonc`: Cloudflare Workers configuration
 
-### Code Quality with Biome
+### 🔍 Code Quality with Biome
 
 This project uses [Biome](https://biomejs.dev/) for linting and formatting. Biome is a fast formatter and linter for JavaScript and TypeScript.
 
@@ -113,13 +113,13 @@ Available scripts:
 
 VS Code users can install the [Biome extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) for in-editor linting and formatting.
 
-## Troubleshooting
+## 🤖 Troubleshooting
 
 - **Webhook setup fails**: Verify that your URL is correct and your Telegram bot token is valid
 - **Bot doesn't respond**: Check logs and ensure environment variables are properly configured
 - When you run image generation tasks using an agent developed by Solana Agent Kit, sometimes it becomes a zombie process just keeping timeout and sending image generation tasks to API endlessly, so please be careful.
 
-## License
+## 📝 License
 
 MIT License
 
