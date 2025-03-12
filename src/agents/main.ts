@@ -4,18 +4,18 @@ import { gpt4oMini } from "../utils/model";
 import { mainPrompt } from "../prompts/main";
 import { solanaTools } from "../tools/solana";
 
-export async function initializeAgent(userId: string, env: Env) {
+export async function initAgent(userId: string) {
     try {
         const memory = new MemorySaver();
         const config = { configurable: { thread_id: userId } };
 
-        const tools = await solanaTools(env);
+        const tools = solanaTools();
 
         const agent = createReactAgent({
-            llm: gpt4oMini(env.OPENAI_API_KEY),
+            llm: gpt4oMini,
             tools,
             checkpointSaver: memory,
-            messageModifier: mainPrompt,
+            prompt: mainPrompt,
         });
 
         return { agent, config };

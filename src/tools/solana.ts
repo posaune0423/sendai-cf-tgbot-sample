@@ -1,16 +1,20 @@
-export const solanaTools = async (env: Env) => {
-    const { SolanaAgentKit, createSolanaTools } = await import("solana-agent-kit");
+import { createSolanaTools, SolanaAgentKit } from "solana-agent-kit";
 
-    const solanaKit = new SolanaAgentKit(env.SOLANA_PRIVATE_KEY, env.RPC_URL, {
-        OPENAI_API_KEY: env.OPENAI_API_KEY,
-        PERPLEXITY_API_KEY: env.PERPLEXITY_API_KEY,
-        ALLORA_API_KEY: env.ALLORA_API_KEY,
-        ALLORA_API_URL: env.ALLORA_API_URL,
-        HELIUS_API_KEY: env.HELIUS_API_KEY,
-        JUPITER_REFERRAL_ACCOUNT: env.JUPITER_REFERRAL_ACCOUNT,
-        FLASH_PRIVILEGE: env.FLASH_PRIVILEGE,
-        ETHEREUM_PRIVATE_KEY: env.ETHEREUM_PRIVATE_KEY,
-        ELFA_AI_API_KEY: env.ELFA_AI_API_KEY,
+export const solanaTools = () => {
+    if (!process.env.SOLANA_PRIVATE_KEY || !process.env.RPC_URL) {
+        throw new Error("Missing environment variables");
+    }
+
+    const solanaKit = new SolanaAgentKit(process.env.SOLANA_PRIVATE_KEY, process.env.RPC_URL, {
+        OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+        PERPLEXITY_API_KEY: process.env.PERPLEXITY_API_KEY,
+        ALLORA_API_KEY: process.env.ALLORA_API_KEY,
+        ALLORA_API_URL: process.env.ALLORA_API_URL,
+        HELIUS_API_KEY: process.env.HELIUS_API_KEY,
+        JUPITER_REFERRAL_ACCOUNT: process.env.JUPITER_REFERRAL_ACCOUNT,
+        FLASH_PRIVILEGE: process.env.FLASH_PRIVILEGE,
+        ETHEREUM_PRIVATE_KEY: process.env.ETHEREUM_PRIVATE_KEY,
+        ELFA_AI_API_KEY: process.env.ELFA_AI_API_KEY,
     });
 
     const tools = createSolanaTools(solanaKit);
