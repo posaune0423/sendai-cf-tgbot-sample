@@ -21,7 +21,6 @@ export default {
         injectEnv(env);
 
         const { setupTelegramBot } = await import("./lib/telegram/bot");
-
         const bot = setupTelegramBot();
 
         const handler = webhookCallback(bot, "cloudflare-mod", {
