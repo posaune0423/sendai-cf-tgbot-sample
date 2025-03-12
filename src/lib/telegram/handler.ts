@@ -1,5 +1,5 @@
 import type { Bot, Context } from "grammy";
-import { iniGraph } from "../../agents/main";
+import { iniGraph, initAgent } from "../../agents/main";
 import { HumanMessage } from "@langchain/core/messages";
 import { TIMEOUT_MS } from "../../constants";
 import type { StreamChunk } from "../../types";
@@ -13,11 +13,14 @@ export const setupHandler = (bot: Bot) => {
 
         try {
             // initialize agent
-            const { graph, config } = await iniGraph(userId);
-            console.log("Initialized Graph");
+            // const { agent, config } = await iniGraph(userId);
+            // console.log("Initialized Graph");
+
+            const { agent, config } = await initAgent(userId);
+            console.log("Initialized Agent");
 
             // send user message to agent
-            const stream = await graph.stream(
+            const stream = await agent.stream(
                 {
                     messages: [new HumanMessage(ctx.message.text)],
                 },
@@ -36,13 +39,12 @@ export const setupHandler = (bot: Bot) => {
                     stream,
                     timeoutPromise,
                 ])) as AsyncIterable<StreamChunk>) {
-                    console.log("Received chunk", chunk);
-                    console.log("Usage metadata", chunk.usage_metadata);
+                    console.log(chunk.agent.messages);
 
-                    if ("generalist" in chunk) {
-                        const lastIndex = chunk.generalist.messages.length - 1;
-                        if (chunk.generalist.messages[lastIndex].content) {
-                            await ctx.reply(String(chunk.generalist.messages[lastIndex].content));
+                    if ("agent" in chunk) {
+                        const lastIndex = chunk.agent.messages.length - 1;
+                        if (chunk.agent.messages[lastIndex].content) {
+                            await ctx.reply(String(chunk.agent.messages[lastIndex].content));
                         }
                     }
                 }

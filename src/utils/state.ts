@@ -10,8 +10,8 @@ export const solanaAgentState = Annotation.Root({
         default: () => [],
     }),
 
-    userId: Annotation<string | null>({
-        reducer: (oldValue, newValue) => newValue ?? oldValue,
-        default: () => null,
-    }),
+    // userId: Annotation<string | null>({
+    //     reducer: (oldValue, newValue) => newValue ?? oldValue,
+    //     default: () => null,
+    // }),
 });
