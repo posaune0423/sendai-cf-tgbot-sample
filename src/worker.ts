@@ -1,8 +1,6 @@
 import { webhookCallback } from "grammy";
-import { setupTelegramBot } from "./lib/telegram/bot";
-
-// increase timeout to 20 seconds so that image generation task can be completed
-const TIMEOUT_MS = 20 * 1000;
+import { injectEnv } from "./utils/injectEnv";
+import { TIMEOUT_MS } from "./constants";
 
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
@@ -19,7 +17,12 @@ const TIMEOUT_MS = 20 * 1000;
 
 export default {
     async fetch(request: Request, env: Env): Promise<Response> {
-        const bot = setupTelegramBot(env);
+        // inject environment variables
+        injectEnv(env);
+
+        const { setupTelegramBot } = await import("./lib/telegram/bot");
+
+        const bot = setupTelegramBot();
 
         const handler = webhookCallback(bot, "cloudflare-mod", {
             timeoutMilliseconds: TIMEOUT_MS,
