@@ -22,9 +22,9 @@
         "zod": "^3.24.2"
     },
     "devDependencies": {
-        "@biomejs/biome": "^1.9.4",
+        "@biomejs/biome": "1.9.5-nightly.ff02a0b",
         "@cloudflare/vitest-pool-workers": "^0.7.8",
-        "@cloudflare/workers-types": "^4.20250311.0",
+        "@cloudflare/workers-types": "^4.20250312.0",
         "@types/node": "^22.13.10",
         "typescript": "^5.8.2",
         "vitest": "~3.0.8",

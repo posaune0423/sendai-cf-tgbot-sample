@@ -2,7 +2,8 @@ import type { Bot, Context } from "grammy";
 import { iniGraph, initAgent } from "../../agents/main";
 import { HumanMessage } from "@langchain/core/messages";
 import { TIMEOUT_MS } from "../../constants";
-import type { StreamChunk } from "../../types";
+import { LogLevel, type StreamChunk } from "../../types";
+import { Logger } from "../../utils/logger";
 
 export const setupHandler = (bot: Bot) => {
     bot.on("message:text", async (ctx: Context) => {
@@ -11,13 +12,19 @@ export const setupHandler = (bot: Bot) => {
             return;
         }
 
+        const logger = new Logger({
+            level: LogLevel.INFO,
+            enableTimestamp: true,
+            enableColors: true,
+        });
+
         try {
             // initialize agent
             // const { agent, config } = await iniGraph(userId);
             // console.log("Initialized Graph");
 
             const { agent, config } = await initAgent(userId);
-            console.log("Initialized Agent");
+            logger.info("message handler", "Initialized Agent");
 
             // send user message to agent
             const stream = await agent.stream(
@@ -26,7 +33,7 @@ export const setupHandler = (bot: Bot) => {
                 },
                 config,
             );
-            console.log("Stream created");
+            logger.info("message handler", "Stream created");
 
             // timeout processing
             const timeoutPromise = new Promise((_, reject) =>
@@ -39,7 +46,15 @@ export const setupHandler = (bot: Bot) => {
                     stream,
                     timeoutPromise,
                 ])) as AsyncIterable<StreamChunk>) {
-                    console.log(chunk.agent.messages);
+                    logger.info("message handler", "Received chunk", chunk);
+
+                    if (chunk.agent.messages[chunk.agent.messages.length - 1].usage_metadata) {
+                        logger.info(
+                            "message handler",
+                            "Usage metadata",
+                            chunk.agent.messages[chunk.agent.messages.length - 1].usage_metadata,
+                        );
+                    }
 
                     if ("agent" in chunk) {
                         const lastIndex = chunk.agent.messages.length - 1;
@@ -54,12 +69,12 @@ export const setupHandler = (bot: Bot) => {
                         "I'm sorry, the operation took too long and timed out. Please try again.",
                     );
                 } else {
-                    console.error("Error processing stream:", error);
+                    logger.error("message handler", "Error processing stream:", error);
                     await ctx.reply("I'm sorry, an error occurred while processing your request.");
                 }
             }
         } catch (error) {
-            console.error("Error initializing agent:", error);
+            logger.error("message handler", "Error initializing agent:", error);
             await ctx.reply("I'm sorry, an error occurred while initializing the agent.");
         }
     });
