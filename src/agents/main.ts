@@ -1,24 +1,19 @@
-import { MemorySaver } from "@langchain/langgraph";
-import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { gpt4oMini } from "../utils/model";
-import { mainPrompt } from "../prompts/main";
-import { solanaTools } from "../tools/solana";
+import { END, START, StateGraph } from "@langchain/langgraph";
+import { solanaAgentState } from "../utils/state";
+import { generalistNode } from "./general";
 
-export async function initAgent(userId: string) {
+export async function iniGraph(userId: string) {
     try {
-        const memory = new MemorySaver();
         const config = { configurable: { thread_id: userId } };
 
-        const tools = solanaTools();
+        const workflow = new StateGraph(solanaAgentState)
+            .addNode("agent", generalistNode)
+            .addEdge(START, "agent")
+            .addEdge("agent", END);
 
-        const agent = createReactAgent({
-            llm: gpt4oMini,
-            tools,
-            checkpointSaver: memory,
-            prompt: mainPrompt,
-        });
+        const graph = workflow.compile();
 
-        return { agent, config };
+        return { agent: graph, config };
     } catch (error) {
         console.error("Failed to initialize agent:", error);
         throw error;

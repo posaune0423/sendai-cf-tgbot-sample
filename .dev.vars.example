@@ -13,3 +13,4 @@ ALLORA_API_KEY=
 ALLORA_API_URL=https://api.allora.network/v2
 ALLORA_NETWORK=mainnet
 ELFA_AI_API_KEY=
+TAVILY_API_KEY=

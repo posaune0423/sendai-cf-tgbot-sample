@@ -1,5 +1,5 @@
 import type { Bot, Context } from "grammy";
-import { initAgent } from "../../agents/main";
+import { iniGraph } from "../../agents/main";
 import { HumanMessage } from "@langchain/core/messages";
 import { TIMEOUT_MS } from "../../constants";
 import { LogLevel, type StreamChunk } from "../../types";
@@ -19,9 +19,9 @@ export const setupHandler = (bot: Bot) => {
         });
 
         try {
-            // initialize agent
-            const { agent, config } = await initAgent(userId);
-            logger.info("message handler", "Initialized Agent");
+            // initialize graph
+            const { agent, config } = await iniGraph(userId);
+            logger.info("message handler", "Initialized Graph");
 
             // send user message to agent
             const stream = await agent.stream(
