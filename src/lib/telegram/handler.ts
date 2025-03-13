@@ -45,7 +45,8 @@ export const setupHandler = (bot: Bot) => {
                 ])) as AsyncIterable<StreamChunk>) {
                     logger.info("message handler", "Received chunk", chunk);
 
-                    if (chunk.agent.messages[chunk.agent.messages.length - 1].usage_metadata) {
+                    // Dump token usage
+                    if (chunk.agent?.messages[chunk.agent.messages.length - 1]?.usage_metadata) {
                         logger.info(
                             "message handler",
                             "Usage metadata",
