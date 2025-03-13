@@ -1,5 +1,5 @@
 import type { Bot, Context } from "grammy";
-import { iniGraph } from "../../agents/main";
+import { initGraph } from "../../agents/main";
 import { HumanMessage } from "@langchain/core/messages";
 import { TIMEOUT_MS } from "../../constants";
 import { LogLevel, type StreamChunk } from "../../types";
@@ -20,7 +20,7 @@ export const setupHandler = (bot: Bot) => {
 
         try {
             // initialize graph
-            const { agent, config } = await iniGraph(userId);
+            const { agent, config } = await initGraph(userId);
             logger.info("message handler", "Initialized Graph");
 
             // send user message to agent
@@ -43,7 +43,7 @@ export const setupHandler = (bot: Bot) => {
                     stream,
                     timeoutPromise,
                 ])) as AsyncIterable<StreamChunk>) {
-                    logger.info("message handler", "Received chunk", chunk);
+                    // logger.info("message handler", "Received chunk", chunk);
 
                     // Dump token usage
                     if (chunk.agent?.messages[chunk.agent.messages.length - 1]?.usage_metadata) {

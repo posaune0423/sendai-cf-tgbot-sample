@@ -2,7 +2,7 @@ import { END, START, StateGraph } from "@langchain/langgraph";
 import { solanaAgentState } from "../utils/state";
 import { generalistNode } from "./general";
 
-export async function iniGraph(userId: string) {
+export async function initGraph(userId: string) {
     try {
         const config = { configurable: { thread_id: userId } };
 
