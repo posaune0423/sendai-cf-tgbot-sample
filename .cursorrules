@@ -23,19 +23,6 @@
 - Implement agent actions explicitly using Tool-calling patterns.
 - Favor simple workflows; escalate complexity only when essential (routing, orchestration).
 
-## AI Agent Design Patterns (Anthropic & Agent Design Patterns adapted)
-
-- Prefer simplicity (Prompt Chaining, Routing).
-- Introduce complexity (Orchestrator-Workers, Evaluator-Optimizer, Reflection) only as needed.
-- Balance deterministic and dynamic flows (Custom Workflow pattern).
-- Clearly separate roles and responsibilities for multi-agent systems.
-
-## Evaluation & Continuous Improvement
-
-- Continuously evaluate outputs and intermediate artifacts (prompts, plans, tool calls).
-- Combine offline (benchmarks, tests) and online evaluations (logs, user feedback).
-- Regularly update evaluation plans based on online data.
-
 ## Directory Structure
 
 ```bash
@@ -47,6 +34,23 @@ src/
 ├── tools/ # Custom tools for agents
 └── utils/ # Utility functions and configurations
 ```
+
+## AI Agent Design Patterns (Anthropic & Agent Design Patterns adapted)
+
+Consider the directory structure carefully and separate responsibilities clearly when generating code.
+Particularly when implementing LangChain agents, place external interaction components and parts that can be extracted as Tools under the `tools/` directory, with files organized to clearly indicate their responsibilities.
+Place reusable prompts under the `prompts/` directory, with files organized to clearly indicate their responsibilities.
+
+- Prefer simplicity (Prompt Chaining, Routing).
+- Introduce complexity (Orchestrator-Workers, Evaluator-Optimizer, Reflection) only as needed.
+- Balance deterministic and dynamic flows (Custom Workflow pattern).
+- Clearly separate roles and responsibilities for multi-agent systems.
+
+## Evaluation & Continuous Improvement
+
+- Continuously evaluate outputs and intermediate artifacts (prompts, plans, tool calls).
+- Combine offline (benchmarks, tests) and online evaluations (logs, user feedback).
+- Regularly update evaluation plans based on online data.
 
 ## Schema Validation (Zod example)
 

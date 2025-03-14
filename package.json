@@ -17,7 +17,8 @@
         "@langchain/langgraph": "^0.2.55",
         "@langchain/openai": "^0.3.17",
         "grammy": "^1.35.0",
-        "solana-agent-kit": "^1.4.9"
+        "solana-agent-kit": "^1.4.9",
+        "zod": "^3.24.2"
     },
     "devDependencies": {
         "@biomejs/biome": "1.9.5-nightly.ff02a0b",
